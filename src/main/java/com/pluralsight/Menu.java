@@ -36,7 +36,6 @@ public class Menu {
                """, currentBalance);
         textAddDeposit();
 
-
         while (true) {
 
             double deposit = Console.promptForDouble("Enter your amount: ");
