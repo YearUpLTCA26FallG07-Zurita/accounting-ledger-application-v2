@@ -4,7 +4,7 @@ public class Menu {
     public static double currentBalance = 540.00;
 
     public static void menuMain() throws InterruptedException {
-        textMenuMain();
+        MenuDialogue.textMenuMain();
 
         while (true) {
 
@@ -42,6 +42,8 @@ public class Menu {
 
             switch (option) {
                 case "D" -> {
+                    MenuDialogue.textAddDeposit();
+
                     double deposit = Console.promptForDouble("\nEnter your amount: ");
 
                     if (deposit <= 0) {
@@ -64,14 +66,14 @@ public class Menu {
                         case "D" -> {
                         }
                         case "X" -> {
-                            textMenuMain();
+                            MenuDialogue.textMenuMain();
                             return currentBalance;
                         }
                         default -> System.out.println("Please enter a valid option.");
                     }
                 }
                 case "X" -> {
-                    textMenuMain();
+                    MenuDialogue.textMenuMain();
                     return currentBalance;
                 }
                 default -> System.out.println("Please enter a valid option.");
@@ -83,13 +85,14 @@ public class Menu {
         boolean isCorrect = true;
         String recipient = "";
         double paymentAmount;
-        textMakePayment();
+
+        MenuDialogue.textMakePayment(currentBalance);
 
         while (true) {
             if (isCorrect) {
                 recipient = Console.promptForString("\nRecipient Full Name: ").trim();
                 if (recipient.equalsIgnoreCase("x")) {
-                    textMenuMain();
+                    MenuDialogue.textMenuMain();
                     return;
                 }
                 paymentAmount = Console.promptForDouble("Amount of Payment: ");
@@ -113,7 +116,7 @@ public class Menu {
                         isCorrect = false;
                     }
                     case "X" -> {
-                        textMenuMain();
+                        MenuDialogue.textMenuMain();
                     }
                     default -> System.out.println("Please enter a valid option.");
                 }
@@ -136,13 +139,13 @@ public class Menu {
                     case "Y" -> {
                         System.out.println("Thank you.\n");
                         Thread.sleep(3000);
-                        textMenuMain();
+                        MenuDialogue.textMenuMain();
                         return;
                     }
                     case "N" -> {
                     }
                     case "X" -> {
-                        textMenuMain();
+                        MenuDialogue.textMenuMain();
                         return;
                     }
                 }
@@ -158,49 +161,4 @@ public class Menu {
         System.out.println("R test");
     }
 
-    private static void textMenuMain() {
-        System.out.println("""
-                -------------------------------------
-                What would you like to do today?
-                
-                D) Add Deposit
-                P) Make A Payment
-                L) Access Ledger
-                
-                X) Exit the Application
-                """);
-    }
-
-    private static void textAddDeposit() {
-        System.out.println("""
-                
-                How much would you like to deposit?
-                (Daily maximum is $1,000.00)""");
-    }
-
-    private static void textMakePayment() {
-        System.out.printf("""
-                -------------------------------------
-                Current balance: $%.2f
-                
-                Please enter the information below to
-                make a payment.
-                
-                To cancel, enter X.
-                """, currentBalance);
-    }
-
-    private static void textLedger() {
-        System.out.println("""
-                -------------------------------------
-                What entries would you like to view?
-                
-                A) All Entries
-                D) Deposit Entries Only
-                P) Payment Entries Only
-                R) Reports
-                
-                X) Return to main menu""");
-
-    }
 }
