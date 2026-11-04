@@ -32,32 +32,43 @@ public class Menu {
 
         System.out.printf("""
                -------------------------------------
-               Your current balance is $%.2f.%n""", currentBalance);
-        textAddDeposit();
+               Your current balance is $%.2f.
+               
+               D) Proceed with new deposit.
+               X) Return to main menu%n%n""", currentBalance);
 
         while (true) {
-
-            double deposit = Console.promptForDouble("\nEnter your amount: ");
-
-            if (deposit <= 0) {
-                System.out.println("Please enter an amount greater than $0.");
-            } else {
-                currentBalance += deposit;
-            }
-            System.out.printf("""
-                    -------------------------------------
-                    Your current balance is now $%.2f.
-                    -------------------------------------
-                    What would you like to do next?
-                    
-                    D) Make another deposit
-                    X) Return to main menu
-                    %n""", currentBalance);
-
-            String option = Console.promptForSwitchString("Enter your command here: ");
+            String option = Console.promptForSwitchString("Enter your command: ");
 
             switch (option) {
                 case "D" -> {
+                    double deposit = Console.promptForDouble("\nEnter your amount: ");
+
+                    if (deposit <= 0) {
+                        System.out.println("Please enter an amount greater than $0.");
+                    } else {
+                        currentBalance += deposit;
+                    }
+                    System.out.printf("""
+                            -------------------------------------
+                            Your current balance is now $%.2f.
+                            -------------------------------------
+                            What would you like to do next?
+                            
+                            D) Make another deposit
+                            X) Return to main menu""", currentBalance);
+                    System.out.println();
+                    option = Console.promptForSwitchString("Enter your command here: ");
+
+                    switch (option) {
+                        case "D" -> {
+                        }
+                        case "X" -> {
+                            textMenuMain();
+                            return currentBalance;
+                        }
+                        default -> System.out.println("Please enter a valid option.");
+                    }
                 }
                 case "X" -> {
                     textMenuMain();
@@ -65,6 +76,7 @@ public class Menu {
                 }
                 default -> System.out.println("Please enter a valid option.");
             }
+
         }
     }
 
@@ -76,7 +88,7 @@ public class Menu {
 
         while (true) {
             if (isCorrect) {
-                recipient = Console.promptForString("\nRecipient Full Name: ");
+                recipient = Console.promptForString("\nRecipient Full Name: ").trim();
                 if (recipient.equalsIgnoreCase("x")) {
                     textMenuMain();
                     return;
@@ -116,7 +128,6 @@ public class Menu {
                     
                     Y) Confirm and continue
                     N) Revise recipient and payment amount
-                    
                     X) Cancel payment
                     """, recipient, paymentAmount);
 
@@ -130,7 +141,10 @@ public class Menu {
                         return;
                     }
                     case "N" -> {}
-                    case "X" -> textMenuMain();
+                    case "X" -> {
+                        textMenuMain();
+                        return;
+                    }
                 }
 
 
