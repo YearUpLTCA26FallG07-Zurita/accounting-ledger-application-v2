@@ -3,7 +3,6 @@ package com.pluralsight;
 public class Menu {
     public static double currentBalance = 540.00;
     public static void menuMain() throws InterruptedException {
-
         textMenuMain();
 
         while (true) {
