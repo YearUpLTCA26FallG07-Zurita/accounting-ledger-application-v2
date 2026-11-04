@@ -10,9 +10,13 @@ public class Console {
 
 
 
-    public static String promptForString(String prompt){
+    public static String promptForSwitchString(String prompt) {
         System.out.print(prompt);
         return scanner.nextLine().toUpperCase().trim();
+    }
+    public static String promptForString(String prompt){
+        System.out.print(prompt);
+        return scanner.nextLine();
     }
 
     public static int promptForInt(String prompt){

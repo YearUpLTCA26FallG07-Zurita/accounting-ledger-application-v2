@@ -1,13 +1,14 @@
 package com.pluralsight;
 
 public class Menu {
+    public static double currentBalance = 540.00;
     public static void menuMain() {
 
         textMenuMain();
 
         while (true) {
 
-            String option = Console.promptForString("Enter your command: ");
+            String option = Console.promptForSwitchString("Enter your command: ");
 
             switch (option) {
                 case "D" -> {
@@ -28,7 +29,6 @@ public class Menu {
     }
 
     private static double submenuAddDeposit() {
-        double currentBalance = 540.00;
 
         System.out.printf("""
                -------------------------------------
@@ -54,7 +54,7 @@ public class Menu {
                     X) Return to main menu
                     %n""", currentBalance);
 
-            String option = Console.promptForString("Enter your command here: ");
+            String option = Console.promptForSwitchString("Enter your command here: ");
 
             switch (option) {
                 case "D" -> {
@@ -69,7 +69,61 @@ public class Menu {
     }
 
     private static void submenuMakePayment() {
-        System.out.println("P test");
+        boolean isCorrect = true;
+        String recipient = "";
+        double paymentAmount;
+        textMakePayment();
+
+        while (true) {
+            if (isCorrect) {
+                recipient = Console.promptForString("\nRecipient Full Name: ");
+                paymentAmount = Console.promptForDouble("Amount of Payment: ");
+            } else {
+                paymentAmount = Console.promptForDouble("Amount of Payment: ");
+            }
+
+            if (paymentAmount > currentBalance) {
+                System.out.println("""
+                        -------------------------------------
+                        ERROR.
+                        You do not have sufficient funds to
+                        process this payment.
+                        
+                        D) Reduce payment amount
+                        X) Cancel payment""");
+
+                String option = Console.promptForSwitchString("Enter your command: ");
+                switch (option) {
+                    case "D" -> {
+                        isCorrect = false;
+                    }
+                    case "X" -> {
+                        textMenuMain();
+                    }
+                    default -> System.out.println("Please enter a valid option.");
+                }
+            } else {
+                System.out.printf("""
+                    -------------------------------------
+                    Recipient Name: %s
+                    Payment Amount: $%.2f
+                    
+                    Is this correct?
+                    
+                    Y) Confirm and continue
+                    N) Update recipient name
+                    
+                    X) Cancel payment
+                    """, recipient, paymentAmount);
+
+                String option = Console.promptForSwitchString("\nEnter your command: ");
+
+
+            }
+
+
+        }
+
     }
 
     private static void submenuLedger() {
@@ -92,5 +146,14 @@ public class Menu {
                
                How much would you like to deposit?
                (Daily maximum is $1,000.00)""");
+    }
+    private static void textMakePayment(){
+        System.out.printf("""
+                -------------------------------------
+                Current balance: $%.2f
+                
+                Please enter the information below to
+                make a payment.
+                """, currentBalance);
     }
 }
