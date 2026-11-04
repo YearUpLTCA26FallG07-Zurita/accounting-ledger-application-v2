@@ -7,7 +7,7 @@ public class Menu {
 
         while (true) {
 
-            String option = Console.promptForString("Enter your command: ").toUpperCase().trim();
+            String option = Console.promptForString("Enter your command: ");
 
             switch (option) {
                 case "D" -> {
@@ -31,32 +31,40 @@ public class Menu {
         double currentBalance = 540.00;
 
         System.out.printf("""
-                -------------------------------------
-               Your current balance is $%.2f.
-               """, currentBalance);
+               -------------------------------------
+               Your current balance is $%.2f.%n""", currentBalance);
         textAddDeposit();
 
         while (true) {
 
-            double deposit = Console.promptForDouble("Enter your amount: ");
+            double deposit = Console.promptForDouble("\nEnter your amount: ");
 
             if (deposit <= 0) {
                 System.out.println("Please enter an amount greater than $0.");
             } else {
                 currentBalance += deposit;
-                return currentBalance;
             }
+            System.out.printf("""
+                    -------------------------------------
+                    Your current balance is now $%.2f.
+                    -------------------------------------
+                    What would you like to do next?
+                    
+                    D) Make another deposit
+                    X) Return to main menu
+                    %n""", currentBalance);
 
+            String option = Console.promptForString("Enter your command here: ");
 
-//            switch (option) {
-//                case "A" -> {
-//                }
-//                case "X" -> {
-//                    textMenuMain();
-//                    return;
-//                }
-//                default -> System.out.println("Please enter a valid option.");
-//            }
+            switch (option) {
+                case "D" -> {
+                }
+                case "X" -> {
+                    textMenuMain();
+                    return currentBalance;
+                }
+                default -> System.out.println("Please enter a valid option.");
+            }
         }
     }
 
@@ -69,6 +77,7 @@ public class Menu {
     }
     private static void textMenuMain(){
         System.out.println("""
+               -------------------------------------
                What would you like to do today?
                
                D) Add Deposit
@@ -82,7 +91,6 @@ public class Menu {
         System.out.println("""
                
                How much would you like to deposit?
-               (Daily maximum is $1,000.00)
-               """);
+               (Daily maximum is $1,000.00)""");
     }
 }

@@ -12,7 +12,7 @@ public class Console {
 
     public static String promptForString(String prompt){
         System.out.print(prompt);
-        return scanner.nextLine();
+        return scanner.nextLine().toUpperCase().trim();
     }
 
     public static int promptForInt(String prompt){
