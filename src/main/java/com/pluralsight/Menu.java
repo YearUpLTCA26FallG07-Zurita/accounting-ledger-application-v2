@@ -152,7 +152,6 @@ public class Menu {
             }
         }
     }
-
     private static void menuLedger() {
         MenuDialogue.textLedger();
 
