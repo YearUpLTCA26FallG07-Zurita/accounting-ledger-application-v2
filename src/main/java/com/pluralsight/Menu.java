@@ -154,7 +154,45 @@ public class Menu {
     }
 
     private static void menuLedger() {
+        MenuDialogue.textLedger();
 
+        while (true) {
+            String option = Console.promptForSwitchString("Enter your command here: ");
+
+            switch (option) {
+                case "A" -> {
+                    submenuAllEntries();
+                }
+                case "D" -> {
+                    submenuDepositsOnly();
+                }
+                case "P" -> {
+                    submenuPaymentsOnly();
+                }
+                case "R" -> {
+                    menuReports();
+                }
+                case "X" -> {
+                    MenuDialogue.textMenuMain();
+                    return;
+                }
+            }
+        }
+    }
+
+    private static void submenuAllEntries() {
+        System.out.println("All entries");
+    }
+
+    private static void submenuDepositsOnly() {
+        System.out.println("Deposits");
+    }
+
+    private static void submenuPaymentsOnly() {
+        System.out.println("Payments");
+    }
+
+    private static void menuReports() {
     }
 
     private static void submenuReports() {

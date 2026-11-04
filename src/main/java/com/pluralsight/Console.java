@@ -8,8 +8,6 @@ public class Console {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-
-
     public static String promptForSwitchString(String prompt) {
         System.out.print(prompt);
         return scanner.nextLine().toUpperCase().trim();
