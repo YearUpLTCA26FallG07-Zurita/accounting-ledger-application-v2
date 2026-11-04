@@ -2,7 +2,7 @@ package com.pluralsight;
 
 public class Menu {
     public static double currentBalance = 540.00;
-    public static void menuMain() {
+    public static void menuMain() throws InterruptedException {
 
         textMenuMain();
 
@@ -68,7 +68,7 @@ public class Menu {
         }
     }
 
-    private static void submenuMakePayment() {
+    private static void submenuMakePayment() throws InterruptedException {
         boolean isCorrect = true;
         String recipient = "";
         double paymentAmount;
@@ -77,6 +77,10 @@ public class Menu {
         while (true) {
             if (isCorrect) {
                 recipient = Console.promptForString("\nRecipient Full Name: ");
+                if (recipient.equalsIgnoreCase("x")) {
+                    textMenuMain();
+                    return;
+                }
                 paymentAmount = Console.promptForDouble("Amount of Payment: ");
             } else {
                 paymentAmount = Console.promptForDouble("Amount of Payment: ");
@@ -111,12 +115,23 @@ public class Menu {
                     Is this correct?
                     
                     Y) Confirm and continue
-                    N) Update recipient name
+                    N) Revise recipient and payment amount
                     
                     X) Cancel payment
                     """, recipient, paymentAmount);
 
                 String option = Console.promptForSwitchString("\nEnter your command: ");
+
+                switch (option) {
+                    case "Y" -> {
+                        System.out.println("Thank you.\n");
+                        Thread.sleep(3000);
+                        textMenuMain();
+                        return;
+                    }
+                    case "N" -> {}
+                    case "X" -> textMenuMain();
+                }
 
 
             }
@@ -154,6 +169,8 @@ public class Menu {
                 
                 Please enter the information below to
                 make a payment.
+                
+                To cancel, enter X.
                 """, currentBalance);
     }
 }
