@@ -2,6 +2,7 @@ package com.pluralsight;
 
 public class Menu {
     public static double currentBalance = 540.00;
+
     public static void menuMain() throws InterruptedException {
         textMenuMain();
 
@@ -17,7 +18,7 @@ public class Menu {
                     submenuMakePayment();
                 }
                 case "L" -> {
-                    submenuLedger();
+                    menuLedger();
                 }
                 case "X" -> {
                     return;
@@ -30,11 +31,11 @@ public class Menu {
     private static double submenuAddDeposit() {
 
         System.out.printf("""
-               -------------------------------------
-               Your current balance is $%.2f.
-               
-               D) Proceed with new deposit.
-               X) Return to main menu%n%n""", currentBalance);
+                -------------------------------------
+                Your current balance is $%.2f.
+                
+                D) Proceed with new deposit.
+                X) Return to main menu%n%n""", currentBalance);
 
         while (true) {
             String option = Console.promptForSwitchString("Enter your command: ");
@@ -75,7 +76,6 @@ public class Menu {
                 }
                 default -> System.out.println("Please enter a valid option.");
             }
-
         }
     }
 
@@ -119,16 +119,16 @@ public class Menu {
                 }
             } else {
                 System.out.printf("""
-                    -------------------------------------
-                    Recipient Name: %s
-                    Payment Amount: $%.2f
-                    
-                    Is this correct?
-                    
-                    Y) Confirm and continue
-                    N) Revise recipient and payment amount
-                    X) Cancel payment
-                    """, recipient, paymentAmount);
+                        -------------------------------------
+                        Recipient Name: %s
+                        Payment Amount: $%.2f
+                        
+                        Is this correct?
+                        
+                        Y) Confirm and continue
+                        N) Revise recipient and payment amount
+                        X) Cancel payment
+                        """, recipient, paymentAmount);
 
                 String option = Console.promptForSwitchString("\nEnter your command: ");
 
@@ -139,43 +139,46 @@ public class Menu {
                         textMenuMain();
                         return;
                     }
-                    case "N" -> {}
+                    case "N" -> {
+                    }
                     case "X" -> {
                         textMenuMain();
                         return;
                     }
                 }
-
-
             }
-
-
         }
+    }
+
+    private static void menuLedger() {
 
     }
 
-    private static void submenuLedger() {
-        System.out.println("L test");
+    private static void submenuReports() {
+        System.out.println("R test");
     }
-    private static void textMenuMain(){
+
+    private static void textMenuMain() {
         System.out.println("""
-               -------------------------------------
-               What would you like to do today?
-               
-               D) Add Deposit
-               P) Make A Payment
-               L) Access Ledger
-        
-               X) Exit the Application
-               """);
+                -------------------------------------
+                What would you like to do today?
+                
+                D) Add Deposit
+                P) Make A Payment
+                L) Access Ledger
+                
+                X) Exit the Application
+                """);
     }
-    private static void textAddDeposit(){
+
+    private static void textAddDeposit() {
         System.out.println("""
-               
-               How much would you like to deposit?
-               (Daily maximum is $1,000.00)""");
+                
+                How much would you like to deposit?
+                (Daily maximum is $1,000.00)""");
     }
-    private static void textMakePayment(){
+
+    private static void textMakePayment() {
         System.out.printf("""
                 -------------------------------------
                 Current balance: $%.2f
@@ -185,5 +188,19 @@ public class Menu {
                 
                 To cancel, enter X.
                 """, currentBalance);
+    }
+
+    private static void textLedger() {
+        System.out.println("""
+                -------------------------------------
+                What entries would you like to view?
+                
+                A) All Entries
+                D) Deposit Entries Only
+                P) Payment Entries Only
+                R) Reports
+                
+                X) Return to main menu""");
+
     }
 }
