@@ -17,7 +17,7 @@ public class Transaction {
     // Constructor #1 - used for constructing entries from user input. Date and time are default so they
     //                  don't get asked for.
 
-    public Transaction(String description, String vendor, double amount) {
+    public Transaction(String vendor, String description, double amount) {
         this.date = LocalDate.now();
         this.time = LocalTime.now();
         this.description = description;

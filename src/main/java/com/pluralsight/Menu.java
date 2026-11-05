@@ -1,8 +1,6 @@
 package com.pluralsight;
 
 public class Menu {
-    public static double currentBalance = 540.00;
-
     public static void menuMain() throws InterruptedException {
         MenuDialogue.textMenuMain();
 
@@ -29,30 +27,23 @@ public class Menu {
     }
 
     private static double submenuAddDeposit() {
-
+        double balance = Process.loadBalance(0);
         System.out.printf("""
                 -------------------------------------
                 Your current balance is $%.2f.
                 
                 D) Proceed with new deposit.
-                X) Return to main menu%n%n""", currentBalance);
+                X) Return to main menu%n%n""", balance);
 
         while (true) {
             String option = Console.promptForSwitchString("Enter your command: ");
 
             switch (option) {
                 case "D" -> {
-                    MenuDialogue.textAddDeposit();
-
                     Process.addDeposit();
+                    balance = Process.loadBalance(0);
 
-                    double deposit = Console.promptForDouble("\nEnter your amount: ");
 
-                    if (deposit <= 0) {
-                        System.out.println("Please enter an amount greater than $0.");
-                    } else {
-                        currentBalance += deposit;
-                    }
                     System.out.printf("""
                             -------------------------------------
                             Your current balance is now $%.2f.
@@ -60,7 +51,7 @@ public class Menu {
                             What would you like to do next?
                             
                             D) Make another deposit
-                            X) Return to main menu""", currentBalance);
+                            X) Return to main menu""", balance);
                     System.out.println();
                     option = Console.promptForSwitchString("Enter your command here: ");
 
@@ -69,14 +60,14 @@ public class Menu {
                         }
                         case "X" -> {
                             MenuDialogue.textMenuMain();
-                            return currentBalance;
+                            return balance;
                         }
                         default -> System.out.println("Please enter a valid option.");
                     }
                 }
                 case "X" -> {
                     MenuDialogue.textMenuMain();
-                    return currentBalance;
+                    return balance;
                 }
                 default -> System.out.println("Please enter a valid option.");
             }
@@ -84,11 +75,12 @@ public class Menu {
     }
 
     private static void submenuMakePayment() throws InterruptedException {
+        double balance = Process.loadBalance(0);
         boolean isCorrect = true;
         String recipient = "";
         double paymentAmount;
 
-        MenuDialogue.textMakePayment(currentBalance);
+        MenuDialogue.textMakePayment(balance);
 
         while (true) {
             if (isCorrect) {
@@ -102,7 +94,7 @@ public class Menu {
                 paymentAmount = Console.promptForDouble("Amount of Payment: ");
             }
 
-            if (paymentAmount > currentBalance) {
+            if (paymentAmount > balance) {
                 System.out.println("""
                         -------------------------------------
                         ERROR.
