@@ -25,7 +25,7 @@ public class MenuDialogue {
     public static void textMakePayment(double currentBalance) {
         System.out.printf("""
                 -------------------------------------
-                Current balance: $%.2f
+                Current balance: $%,.2f
                 
                 Please enter the information below to
                 make a payment.

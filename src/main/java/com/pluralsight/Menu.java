@@ -26,11 +26,11 @@ public class Menu {
         }
     }
 
-    private static double submenuAddDeposit() {
-        double balance = Process.loadBalance(0);
+    private static void submenuAddDeposit() {
+        double balance = Process.balance;
         System.out.printf("""
                 -------------------------------------
-                Your current balance is $%.2f.
+                Your current balance is $%,.2f.
                 
                 D) Proceed with new deposit.
                 X) Return to main menu%n%n""", balance);
@@ -41,12 +41,12 @@ public class Menu {
             switch (option) {
                 case "D" -> {
                     Process.addDeposit();
-                    balance = Process.loadBalance(0);
+                    balance = Process.balance;
 
 
                     System.out.printf("""
                             -------------------------------------
-                            Your current balance is now $%.2f.
+                            Your current balance is now $%,.2f.
                             -------------------------------------
                             What would you like to do next?
                             
@@ -60,14 +60,14 @@ public class Menu {
                         }
                         case "X" -> {
                             MenuDialogue.textMenuMain();
-                            return balance;
+                            return;
                         }
                         default -> System.out.println("Please enter a valid option.");
                     }
                 }
                 case "X" -> {
                     MenuDialogue.textMenuMain();
-                    return balance;
+                    return;
                 }
                 default -> System.out.println("Please enter a valid option.");
             }
@@ -75,7 +75,7 @@ public class Menu {
     }
 
     private static void submenuMakePayment() throws InterruptedException {
-        double balance = Process.loadBalance(0);
+        double balance = Process.balance;
         boolean isCorrect = true;
         String recipient = "";
         double paymentAmount;
@@ -120,7 +120,7 @@ public class Menu {
 //                System.out.printf("""
 //                        -------------------------------------
 //                        Recipient Name: %s
-//                        Payment Amount: $%.2f
+//                        Payment Amount: $%,.2f
 //
 //                        Is this correct?
 //

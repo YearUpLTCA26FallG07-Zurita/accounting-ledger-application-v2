@@ -12,7 +12,7 @@ public class Transaction {
     private double amount;
 
     public DateTimeFormatter dateFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    public DateTimeFormatter timeFmt = DateTimeFormatter.ofPattern("HH:mm a");
+    public DateTimeFormatter timeFmt = DateTimeFormatter.ofPattern("hh:mm a");
 
     // Constructor #1 - used for constructing entries from user input. Date and time are default so they
     //                  don't get asked for.
@@ -78,6 +78,14 @@ public class Transaction {
     }
     @Override
     public String toString() {
-        return date.format(dateFmt) + "|" + time.format(timeFmt) + "|" + description + "|" + vendor + "|" + amount;
+        String formattedAmount;
+
+        if (amount < 0) {
+            formattedAmount = "-$" + String.format("%,.2f", Math.abs(amount));
+        } else {
+            formattedAmount = "$" + String.format("%,.2f", amount);
+        }
+
+        return date.format(dateFmt) + " | " + time.format(timeFmt) + " | " + description + " | " + vendor + " | " + formattedAmount;
     }
 }
