@@ -5,8 +5,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class Transaction {
-    private String date;
-    private String time;
+    private LocalDate date;
+    private LocalTime time;
     private String description;
     private String vendor;
     private double amount;
@@ -14,27 +14,42 @@ public class Transaction {
     public DateTimeFormatter dateFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public DateTimeFormatter timeFmt = DateTimeFormatter.ofPattern("HH:mm a");
 
-    public Transaction(String date, String time, String description, String vendor, double amount) {
-        this.date = date;
-        this.time = time;
+    // Constructor #1 - used for constructing entries from user input. Date and time are default so they
+    //                  don't get asked for.
+
+    public Transaction(String description, String vendor, double amount) {
+        this.date = LocalDate.now();
+        this.time = LocalTime.now();
         this.description = description;
         this.vendor = vendor;
         this.amount = amount;
     }
 
-    public String getDate() {
+    // Constructor #2 - used for constructing entries to be appended to transactions.csv. Since FileWriter
+    //                  will only append Strings, date and time use parsing methods.
+
+    public Transaction(String date, String time, String description, String vendor, double amount) {
+        this.date = LocalDate.parse(date, dateFmt);
+        this.time = LocalTime.parse(time, timeFmt);
+        this.description = description;
+        this.vendor = vendor;
+        this.amount = amount;
+    }
+
+
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public String getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 
@@ -63,6 +78,6 @@ public class Transaction {
     }
     @Override
     public String toString() {
-        return date + "|" + time + "|" + description + "|" + vendor + "|" + amount;
+        return date.format(dateFmt) + "|" + time.format(timeFmt) + "|" + description + "|" + vendor + "|" + amount;
     }
 }
