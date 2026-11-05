@@ -1,6 +1,7 @@
 package com.pluralsight;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -185,28 +186,80 @@ public class Menu {
         Process.loadTransaction();
         try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
             String line;
-
-            while((line =reader.readLine())!=null) {
+            System.out.println("------------------------------------------------------------------------------");
+            while ((line = reader.readLine()) != null) {
                 System.out.println(line);
             }
-        }
-        catch (IOException e){
+            System.out.println("------------------------------------------------------------------------------");
+            Thread.sleep(3000);
+            MenuDialogue.textLedger();
+        } catch (IOException e) {
             System.out.println("Error.");
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
+
     private static void submenuDepositsOnly() {
-        System.out.println("Deposits");
+        try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
+            String line;
+            System.out.println("------------------------------------------------------------------------------");
+            while ((line = reader.readLine()) != null) {
+                String[] listing = line.split("\\|");
+                String amountText = listing[4].trim();
+
+                amountText = amountText.replace("$", "").replace(",", "");
+
+                double amount = Double.parseDouble(amountText);
+
+                if (amount > 0) {
+                    System.out.println(line);
+                }
+            }
+            System.out.println("------------------------------------------------------------------------------");
+            Thread.sleep(3000);
+            MenuDialogue.textLedger();
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Error reading file.");
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid transaction amount.");
+        }
     }
 
-    private static void submenuPaymentsOnly() {
-        System.out.println("Payments");
+        private static void submenuPaymentsOnly () {
+            try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
+                String line;
+                System.out.println("------------------------------------------------------------------------------");
+                while ((line = reader.readLine()) != null) {
+                    String[] listing = line.split("\\|");
+                    String amountText = listing[4].trim();
+
+                    amountText = amountText.replace("$", "").replace(",", "");
+
+                    double amount = Double.parseDouble(amountText);
+
+                    if (amount < 0) {
+                        System.out.println(line);
+                    }
+                }
+                System.out.println("------------------------------------------------------------------------------");
+                Thread.sleep(3000);
+                MenuDialogue.textLedger();
+            } catch (IOException e) {
+                System.out.println("Error reading file.");
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid transaction amount.");
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        private static void menuReports () {
+        }
+
+        private static void submenuReports () {
+            System.out.println("R test");
+        }
+
     }
 
-    private static void menuReports() {
-    }
-
-    private static void submenuReports() {
-        System.out.println("R test");
-    }
-
-}

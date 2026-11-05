@@ -5,7 +5,7 @@ public class MenuDialogue {
     public static void textMenuMain() {
         System.out.println("""
                 -------------------------------------
-                What would you like to do today?
+                Main Menu
                 
                 D) Add Deposit
                 P) Make A Payment
