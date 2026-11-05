@@ -83,9 +83,14 @@ public class Transaction {
         if (amount < 0) {
             formattedAmount = "-$" + String.format("%,.2f", Math.abs(amount));
         } else {
-            formattedAmount = "$" + String.format("%,.2f", amount);
+            formattedAmount = " $" + String.format("%,.2f", amount);
         }
 
-        return date.format(dateFmt) + " | " + time.format(timeFmt) + " | " + description + " | " + vendor + " | " + formattedAmount;
+        return String.format("%-12s | %-12s | %-20s | %-15s | %5s",
+                date.format(dateFmt),
+                time.format(timeFmt),
+                vendor,
+                description,
+                formattedAmount);
     }
 }

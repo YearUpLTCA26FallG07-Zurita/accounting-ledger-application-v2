@@ -1,7 +1,11 @@
 package com.pluralsight;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Menu {
-    public static void menuMain() throws InterruptedException {
+    public static void menuMain() throws InterruptedException, IOException {
         MenuDialogue.textMenuMain();
 
         while (true) {
@@ -149,7 +153,8 @@ public class Menu {
 //            }
 //        }
     }
-    private static void menuLedger() {
+
+    private static void menuLedger() throws IOException {
         MenuDialogue.textLedger();
 
         while (true) {
@@ -176,10 +181,19 @@ public class Menu {
         }
     }
 
-    private static void submenuAllEntries() {
-        System.out.println("All entries");
-    }
+    private static void submenuAllEntries() throws IOException {
+        Process.loadTransaction();
+        try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
+            String line;
 
+            while((line =reader.readLine())!=null) {
+                System.out.println(line);
+            }
+        }
+        catch (IOException e){
+            System.out.println("Error.");
+        }
+    }
     private static void submenuDepositsOnly() {
         System.out.println("Deposits");
     }

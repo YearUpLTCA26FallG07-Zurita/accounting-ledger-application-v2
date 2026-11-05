@@ -104,13 +104,12 @@ public class Process {
 
     public static void makePayment() {
         System.out.println("-------------------------------------");
-        String name = Console.promptForString("\nEnter the name of the recipient: ");
-        double payment = -Math.abs(Console.promptForDouble("\nEnter payment amount: "));
-
-        String description = Console.promptForString("\nEnter short description of the payment: ");
+        String name = Console.promptForString("Enter the name of the recipient: ");
+        double payment = -Math.abs(Console.promptForDouble("Enter payment amount: "));
+        String description = Console.promptForString("Enter short description of the payment: ");
         System.out.println("-------------------------------------");
 
-        Transaction transaction = new Transaction(description, name, payment);
+        Transaction transaction = new Transaction(name, description, payment);
         transactions.add(transaction);
         writeTransaction(transaction);
         balance += payment;
