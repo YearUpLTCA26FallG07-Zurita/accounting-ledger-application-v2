@@ -15,13 +15,6 @@ public class MenuDialogue {
                 """);
     }
 
-    public static void textAddDeposit() {
-        System.out.println("""
-                
-                How much would you like to deposit?
-                (Daily maximum is $1,000.00)""");
-    }
-
     public static void textMakePayment(double currentBalance) {
         System.out.printf("""
                 -------------------------------------
@@ -44,7 +37,20 @@ public class MenuDialogue {
                 P) Payment Entries Only
                 R) Reports
                 
-                X) Return to main menu""");
+                X) Return to main menu
+                """);
 
+    }
+    public static void textReport() {
+        System.out.println("""
+                Select a filter for your report.
+                
+                1) Month To Date
+                2) Previous Month
+                3) Year To Date
+                4) Previous Year
+                5) Search By Vendor
+                0) Back to Ledger
+                """);
     }
 }

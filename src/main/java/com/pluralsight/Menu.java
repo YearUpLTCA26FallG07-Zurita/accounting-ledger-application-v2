@@ -226,40 +226,57 @@ public class Menu {
         }
     }
 
-        private static void submenuPaymentsOnly () {
-            try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
-                String line;
-                System.out.println("------------------------------------------------------------------------------");
-                while ((line = reader.readLine()) != null) {
-                    String[] listing = line.split("\\|");
-                    String amountText = listing[4].trim();
+    private static void submenuPaymentsOnly() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
+            String line;
+            System.out.println("------------------------------------------------------------------------------");
+            while ((line = reader.readLine()) != null) {
+                String[] listing = line.split("\\|");
+                String amountText = listing[4].trim();
 
-                    amountText = amountText.replace("$", "").replace(",", "");
+                amountText = amountText.replace("$", "").replace(",", "");
 
-                    double amount = Double.parseDouble(amountText);
+                double amount = Double.parseDouble(amountText);
 
-                    if (amount < 0) {
-                        System.out.println(line);
-                    }
+                if (amount < 0) {
+                    System.out.println(line);
                 }
-                System.out.println("------------------------------------------------------------------------------");
-                Thread.sleep(3000);
-                MenuDialogue.textLedger();
-            } catch (IOException e) {
-                System.out.println("Error reading file.");
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid transaction amount.");
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
             }
+            System.out.println("------------------------------------------------------------------------------");
+            Thread.sleep(3000);
+            MenuDialogue.textLedger();
+        } catch (IOException e) {
+            System.out.println("Error reading file.");
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid transaction amount.");
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
-
-        private static void menuReports () {
-        }
-
-        private static void submenuReports () {
-            System.out.println("R test");
-        }
-
     }
 
+    private static void menuReports() {
+        MenuDialogue.textReport();
+
+        while (true) {
+
+            int option = Console.promptForInt("Enter your command: ");
+
+            switch (option) {
+                case 1 -> LedgerReport.monthToDate();
+                case 2 -> LedgerReport.previousMonth();
+                case 3 -> LedgerReport.yearToDate();
+                case 4 -> LedgerReport.previousYear();
+                case 5 -> LedgerReport.searchByVendor();
+                case 0 -> {
+                    return;
+
+                }
+            }
+        }
+    }
+
+    private static void submenuReports() {
+        System.out.println("R test");
+
+    }
+}

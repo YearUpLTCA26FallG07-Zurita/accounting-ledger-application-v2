@@ -79,6 +79,7 @@ public class Transaction {
     @Override
     public String toString() {
         String formattedAmount;
+        String formattedDescription = "\"" + description + "\"";
 
         if (amount < 0) {
             formattedAmount = "-$" + String.format("%,.2f", Math.abs(amount));
@@ -90,7 +91,7 @@ public class Transaction {
                 date.format(dateFmt),
                 time.format(timeFmt),
                 vendor,
-                description,
+                formattedDescription,
                 formattedAmount);
     }
 }

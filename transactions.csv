@@ -1,20 +1,45 @@
-2026-11-05 | 11:33 AM | Acme Corp            | Salary          | $250.00
-2026-11-05 | 10:45 AM | Amazon               | Online Order    | -$42.99
-2026-11-04 | 04:22 PM | Greenfield LLC       | Bonus           | $500.00
-2026-11-04 | 01:15 PM | Northstar Inc        | Refund          | $125.00
-2026-11-03 | 06:48 PM | Walmart              | Groceries       | -$86.45
-2026-11-03 | 02:10 PM | Bright Future Co     | Commission      | $175.00
-2026-11-03 | 11:05 AM | Apex Solutions       | Freelance Pay   | $325.00
-2026-11-02 | 05:55 PM | Target               | Retail Purchase | -$64.27
-2026-11-02 | 12:40 PM | Silverline Group     | Gift            | $200.00
-2026-11-02 | 08:15 AM | Bluebird Services    | Reimbursement   | $150.00
-2026-11-01 | 07:20 PM | Shell                | Fuel            | -$45.00
-2026-11-01 | 03:35 PM | Summit Partners      | Interest        | $275.00
-2026-10-31 | 01:50 PM | Oakwood Finance      | Cash Deposit    | $400.00
-2026-10-31 | 10:10 AM | Starbucks            | Coffee          | -$12.50
-2026-10-30 | 06:25 PM | Cedar Technologies   | Dividend        | $350.00
-2026-10-30 | 02:45 PM | Horizon Media        | Contract Pay    | $225.00
-2026-10-29 | 11:55 AM | CVS                  | Pharmacy        | -$23.76
-2026-10-29 | 09:20 AM | Pioneer Holdings     | Transfer In     | $300.00
-2026-10-28 | 04:05 PM | Redwood Studios      | Project Pay     | $175.00
-2026-10-28 | 01:30 PM | Netflix              | Subscription    | -$15.99
+2026-11-05   | 11:33 AM     | Acme Corp            | "Monthly Salary"       |  $2,500.00
+2026-11-04   | 02:15 PM     | Comcast              | "Internet Bill"        |  $450.00
+2026-11-03   | 01:40 PM     | Best Buy             | "Electronics"          | -$129.99
+2026-11-02   | 12:05 PM     | City Utilities       | "Utility Refund"       |  $35.50
+2026-11-01   | 09:20 AM     | Fresh Market         | "Weekly Groceries"     | -$87.45
+2026-10-28   | 03:45 PM     | Acme Corp            | "Monthly Bonus"        |  $325.00
+2026-10-17   | 11:20 AM     | Home Depot           | "Home Supplies"        | -$78.49
+2026-10-06   | 09:10 AM     | Acme Corp            | "Referral Bonus"       |  $175.00
+2026-09-18   | 04:22 PM     | Acme Corp            | "Performance Bonus"    |  $500.00
+2026-08-03   | 01:15 PM     | Amazon               | "Returned Purchase"    |  $125.00
+2026-07-21   | 06:48 PM     | Walmart              | "Weekly Groceries"     | -$86.45
+2026-06-28   | 03:10 PM     | Chase Bank           | "Savings Interest"     |  $275.00
+2026-06-22   | 11:45 AM     | Shell                | "Gasoline"             | -$52.30
+2026-06-17   | 02:30 PM     | Acme Corp            | "Commission Payment"   |  $325.00
+2026-06-09   | 10:15 AM     | Target               | "Household Supplies"   | -$74.99
+2026-06-02   | 08:40 AM     | Health Insurance Co  | "Premium Refund"       |  $150.00
+2026-04-26   | 05:55 PM     | Family Member        | "Birthday Gift"        |  $200.00
+2026-03-11   | 12:40 PM     | Amazon               | "Online Purchase"      | -$42.99
+2026-02-19   | 08:15 AM     | Acme Corp            | "Freelance Payment"    |  $650.00
+2026-01-07   | 07:20 PM     | Netflix              | "Monthly Subscription" | -$15.99
+2025-12-27   | 04:35 PM     | Acme Corp            | "Year-End Bonus"       |  $400.00
+2025-12-23   | 10:10 AM     | Starbucks            | "Coffee"               | -$12.50
+2025-12-18   | 06:25 PM     | Verizon              | "Phone Bill"           | -$350.00
+2025-12-12   | 02:45 PM     | Acme Corp            | "Contract Payment"     |  $225.00
+2025-12-04   | 11:55 AM     | CVS                  | "Prescription"         | -$23.76
+2025-10-08   | 09:20 AM     | Acme Corp            | "Payroll Deposit"      |  $300.00
+2025-09-17   | 06:25 PM     | Acme Corp            | "Project Payment"      |  $175.00
+2025-08-04   | 02:45 PM     | T-Mobile             | "Monthly Phone Bill"   | -$65.00
+2025-07-28   | 03:15 PM     | Acme Corp            | "Project Payment"      |  $525.00
+2025-07-19   | 01:50 PM     | Walgreens            | "Prescription"         | -$31.25
+2025-07-11   | 10:30 AM     | Acme Corp            | "Referral Bonus"       |  $100.00
+2025-07-05   | 08:45 AM     | City Parking         | "Monthly Parking"      | -$18.00
+2025-07-01   | 04:20 PM     | Acme Corp            | "Project Bonus"        |  $275.00
+2025-05-19   | 08:15 AM     | Health Insurance Co  | "Insurance Refund"     |  $185.00
+2025-03-07   | 07:20 PM     | McDonald's           | "Fast Food"            | -$14.75
+2025-01-15   | 03:35 PM     | Chase Bank           | "Savings Dividend"     |  $95.00
+2024-12-22   | 01:50 PM     | Acme Corp            | "Year-End Bonus"       |  $800.00
+2024-12-18   | 10:10 AM     | Starbucks            | "Coffee"               | -$22.50
+2024-12-14   | 06:25 PM     | Verizon              | "Phone Bill"           | -$450.00
+2024-12-09   | 02:45 PM     | City Utilities       | "Electric Bill"        | -$48.00
+2024-12-03   | 11:55 AM     | Acme Corp            | "Payroll Deposit"      |  $300.00
+2024-10-08   | 09:20 AM     | Planet Fitness       | "Gym Membership"      | -$35.00
+2024-08-17   | 06:25 PM     | Acme Corp            | "Sales Commission"     |  $225.00
+2024-05-13   | 09:20 AM     | Acme Corp            | "Payroll Deposit"      |  $300.00
+2024-01-19   | 01:30 PM     | Netflix              | "Monthly Subscription" | -$15.99
