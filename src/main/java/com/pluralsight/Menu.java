@@ -44,6 +44,8 @@ public class Menu {
                 case "D" -> {
                     MenuDialogue.textAddDeposit();
 
+                    processAddDeposit();
+
                     double deposit = Console.promptForDouble("\nEnter your amount: ");
 
                     if (deposit <= 0) {
@@ -80,6 +82,16 @@ public class Menu {
             }
         }
     }
+
+    private static void processAddDeposit() {
+        double deposit = Console.promptForDouble("\nEnter your amount: ");
+
+            if (deposit > 0) {
+                currentBalance += deposit;
+            } else {
+                System.out.println("Please enter an amount greater than $0.");
+            }
+        }
 
     private static void submenuMakePayment() throws InterruptedException {
         boolean isCorrect = true;
