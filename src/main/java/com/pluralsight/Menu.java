@@ -190,7 +190,6 @@ public class Menu {
     }
 
     private static void submenuAllEntries() {
-        Process.loadTransaction();
         try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
             String line;
             System.out.println("------------------------------------------------------------------------------");

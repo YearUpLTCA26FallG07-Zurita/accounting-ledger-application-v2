@@ -56,4 +56,10 @@ public class MenuDialogue {
                 0) Back to Ledger
                 """);
     }
+    public static void textCustomSearch(){
+        System.out.println("""
+                Enter your preferred filters.
+                If a filter option doesn't apply, just press Enter.
+                """);
+    }
 }

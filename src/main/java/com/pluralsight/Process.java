@@ -12,9 +12,7 @@ public class Process {
     public static ArrayList<Transaction> loadTransaction() {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
-
             String line;
-
             while ((line = reader.readLine()) != null) {
                 String[] listing = line.split("\\|");
                 Transaction newListing = new Transaction(

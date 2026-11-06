@@ -140,7 +140,31 @@ public class LedgerReport {
     }
 
     public static void customSearch() {
+        System.out.println("""
+                Enter the following filter info.
+                If a filter doesn't apply, press Enter.
+                """);
 
+        while (true) {
+            System.out.println("------------------------------------------------------------------------------");
+            String startDate = Console.promptForString("Start date: ");
+            String endDate = Console.promptForString("End date: ");
+            String description = Console.promptForString("Transaction description: ");
+            String vendor = Console.promptForString("Vendor/Company: ");
+            String price = Console.promptForString("Transaction price: ");
+            System.out.println("------------------------------------------------------------------------------");
+
+            if (startDate.isBlank()
+                    && endDate.isBlank()
+                    && description.isBlank()
+                    && vendor.isBlank()
+                    && price.isBlank()) {
+                System.out.println("Custom Search must have at least one filter.");
+            }
+
+
+
+        }
     }
 }
 
