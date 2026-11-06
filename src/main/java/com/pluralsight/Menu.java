@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Menu {
-    public static void menuMain() throws InterruptedException {
+    public static void menuMain() {
         System.out.println("""
                 -------------------------------------
                 Main Menu
@@ -80,7 +80,7 @@ public class Menu {
         }
     }
 
-    private static void submenuMakePayment() throws InterruptedException {
+    private static void submenuMakePayment() {
         double balance = Process.balance;
         boolean isCorrect = true;
         String recipient = "";
@@ -90,20 +90,21 @@ public class Menu {
 
         Process.makePayment();
 
-        while (true) {
-            if (isCorrect) {
-                recipient = Console.promptForString("\nRecipient Full Name: ").trim();
-                if (recipient.equalsIgnoreCase("x")) {
-                    MenuDialogue.textMenuMain();
-                    return;
+        try {
+            while (true) {
+                if (isCorrect) {
+                    recipient = Console.promptForString("\nRecipient Full Name: ").trim();
+                    if (recipient.equalsIgnoreCase("x")) {
+                        MenuDialogue.textMenuMain();
+                        return;
+                    }
+                    paymentAmount = Console.promptForDouble("Amount of Payment: ");
+                } else {
+                    paymentAmount = Console.promptForDouble("Amount of Payment: ");
                 }
-                paymentAmount = Console.promptForDouble("Amount of Payment: ");
-            } else {
-                paymentAmount = Console.promptForDouble("Amount of Payment: ");
-            }
 
-            if (paymentAmount > balance) {
-                System.out.println("""
+                if (paymentAmount > balance) {
+                    System.out.println("""
                         -------------------------------------
                         ERROR.
                         You do not have sufficient funds to
@@ -112,18 +113,18 @@ public class Menu {
                         D) Reduce payment amount
                         X) Cancel payment""");
 
-                String option = Console.promptForSwitchString("Enter your command: ");
-                switch (option) {
-                    case "D" -> {
-                        isCorrect = false;
+                    String option = Console.promptForSwitchString("Enter your command: ");
+                    switch (option) {
+                        case "D" -> {
+                            isCorrect = false;
+                        }
+                        case "X" -> {
+                            MenuDialogue.textMenuMain();
+                        }
+                        default -> System.out.println("Please enter a valid option.");
                     }
-                    case "X" -> {
-                        MenuDialogue.textMenuMain();
-                    }
-                    default -> System.out.println("Please enter a valid option.");
-                }
-            } else {
-                System.out.printf("""
+                } else {
+                    System.out.printf("""
                         -------------------------------------
                         Recipient Name: %s
                         Payment Amount: $%,.2f
@@ -135,25 +136,30 @@ public class Menu {
                         X) Cancel payment
                         """, recipient, paymentAmount);
 
-                String option = Console.promptForSwitchString("\nEnter your command: ");
+                    String option = Console.promptForSwitchString("\nEnter your command: ");
 
-                switch (option) {
-                    case "Y" -> {
-                        Process.makePayment();
-                        System.out.println("Thank you.\n");
-                        Thread.sleep(3000);
-                        MenuDialogue.textMenuMain();
-                        return;
-                    }
-                    case "N" -> {
-                    }
-                    case "X" -> {
-                        MenuDialogue.textMenuMain();
-                        return;
+                    switch (option) {
+                        case "Y" -> {
+                            Process.makePayment();
+                            System.out.println("Thank you.\n");
+                            Thread.sleep(3000);
+                            MenuDialogue.textMenuMain();
+                            return;
+                        }
+                        case "N" -> {
+                        }
+                        case "X" -> {
+                            MenuDialogue.textMenuMain();
+                            return;
+                        }
                     }
                 }
             }
         }
+        catch (InterruptedException e) {
+            System.out.println("Error");
+        }
+
     }
 
     private static void menuLedger() {
@@ -185,7 +191,7 @@ public class Menu {
 
     private static void submenuAllEntries() {
         Process.loadTransaction();
-        try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
             String line;
             System.out.println("------------------------------------------------------------------------------");
             while ((line = reader.readLine()) != null) {
@@ -202,7 +208,7 @@ public class Menu {
     }
 
     private static void submenuDepositsOnly() {
-        try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
             String line;
             System.out.println("------------------------------------------------------------------------------");
             while ((line = reader.readLine()) != null) {
@@ -228,7 +234,7 @@ public class Menu {
     }
 
     private static void submenuPaymentsOnly() {
-        try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
             String line;
             System.out.println("------------------------------------------------------------------------------");
             while ((line = reader.readLine()) != null) {

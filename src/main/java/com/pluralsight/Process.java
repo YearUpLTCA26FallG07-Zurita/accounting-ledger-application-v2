@@ -5,13 +5,13 @@ import java.util.ArrayList;
 
 public class Process {
     public static ArrayList<Transaction> transactions = new ArrayList<>();
-    //public static double balance = 0 ;
+
     /**
      * Method that uses a BufferedReader to read off every entry in transactions.csv and load them into the program to be used in the Ledger.
      */
     public static ArrayList<Transaction> loadTransaction() {
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
 
             String line;
 
@@ -35,7 +35,7 @@ public class Process {
      * BufferedReader will then take those values and do its aforementioned job.
      */
     public static void writeTransaction(Transaction newListing) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.csv", true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(AccountingLedger.filenameTransactions, true))) {
             writer.write(newListing.toString());
             writer.newLine();
         } catch (IOException e) {
@@ -51,7 +51,7 @@ public class Process {
 
     public static void loadBalance() {
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("account_balance.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameBalance))) {
             String line = reader.readLine();
             if (line != null) {
                 balance = Double.parseDouble(line.trim());
@@ -63,7 +63,7 @@ public class Process {
         }
 
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("account_balance.csv"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(AccountingLedger.filenameBalance))) {
             writer.write(String.format("%.2f", balance));
         } catch (IOException e) {
             System.out.println("Balance could not be saved.");
@@ -77,7 +77,7 @@ public class Process {
      * Lastly, account balance is updated and saved in a separate file.
      */
     public static void saveBalance() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("account_balance.csv"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(AccountingLedger.filenameBalance))) {
             writer.write(String.format("%.2f", balance));
         } catch (IOException e) {
             System.out.println("Balance could not be saved.");

@@ -18,7 +18,7 @@ public class LedgerReport {
 //        for(Transaction t : Process.transactions){
 //
 //        }
-        try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
             String line;
             System.out.println("------------------------------------------------------------------------------");
             while ((line = reader.readLine()) != null) {
@@ -44,7 +44,7 @@ public class LedgerReport {
             LocalDate startDate = previousMonth.atDay(1);
             LocalDate endDate = previousMonth.atEndOfMonth();
 
-            try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
                 String line;
                 System.out.println("------------------------------------------------------------------------------");
                 while ((line = reader.readLine()) != null) {
@@ -70,7 +70,7 @@ public class LedgerReport {
         LocalDate startDate = year.atDay(1);
         LocalDate endDate = LocalDate.now();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
             String line;
             System.out.println("------------------------------------------------------------------------------");
             while ((line = reader.readLine()) != null) {
@@ -96,7 +96,7 @@ public class LedgerReport {
         LocalDate startDate = currentYear.atDay(1);
         LocalDate endDate = currentYear.atMonth(12).atEndOfMonth();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
             String line;
             System.out.println("------------------------------------------------------------------------------");
             while ((line = reader.readLine()) != null) {
@@ -119,7 +119,7 @@ public class LedgerReport {
     public static void searchByVendor() {
         String searchVendor = Console.promptForString("Enter the name of the vendor: ");
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
             String line;
             System.out.println("------------------------------------------------------------------------------");
             while ((line = reader.readLine()) != null) {

@@ -7,7 +7,9 @@ import java.util.ArrayList;
 
 public class AccountingLedger {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static String filenameBalance = "account_balance.csv";
+    public static String filenameTransactions = "transactions.csv";
+    public static void main(String[] args) {
 
         ArrayList<Transaction> transactions = Process.loadTransaction();
         Process.loadBalance();
