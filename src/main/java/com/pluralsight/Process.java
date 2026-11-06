@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Process {
     public static ArrayList<Transaction> transactions = new ArrayList<>();
-
+    //public static double balance = 0 ;
     /**
      * Method that uses a BufferedReader to read off every entry in transactions.csv and load them into the program to be used in the Ledger.
      */

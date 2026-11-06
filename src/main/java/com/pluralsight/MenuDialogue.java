@@ -6,11 +6,11 @@ public class MenuDialogue {
         System.out.println("""
                 -------------------------------------
                 Main Menu
-                
+
                 D) Add Deposit
                 P) Make A Payment
                 L) Access Ledger
-                
+
                 X) Exit the Application
                 """);
     }

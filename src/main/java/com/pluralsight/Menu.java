@@ -9,23 +9,26 @@ public class Menu {
     public static void menuMain() throws InterruptedException, IOException {
         MenuDialogue.textMenuMain();
 
+        System.out.println("""
+                -------------------------------------
+                Main Menu
+                
+                D) Add Deposit
+                P) Make A Payment
+                L) Access Ledger
+                
+                X) Exit the Application
+                """);
+
         while (true) {
 
             String option = Console.promptForSwitchString("Enter your command: ");
 
             switch (option) {
-                case "D" -> {
-                    submenuAddDeposit();
-                }
-                case "P" -> {
-                    submenuMakePayment();
-                }
-                case "L" -> {
-                    menuLedger();
-                }
-                case "X" -> {
-                    return;
-                }
+                case "D" ->  submenuAddDeposit();
+                case "P" ->  submenuMakePayment();
+                case "L" ->  menuLedger();
+                case "X" -> { return;}
                 default -> System.out.println("Please enter a valid option.");
             }
         }
@@ -89,70 +92,70 @@ public class Menu {
 
         Process.makePayment();
 
-//        while (true) {
-//            if (isCorrect) {
-//                recipient = Console.promptForString("\nRecipient Full Name: ").trim();
-//                if (recipient.equalsIgnoreCase("x")) {
-//                    MenuDialogue.textMenuMain();
-//                    return;
-//                }
-//                paymentAmount = Console.promptForDouble("Amount of Payment: ");
-//            } else {
-//                paymentAmount = Console.promptForDouble("Amount of Payment: ");
-//            }
-//
-//            if (paymentAmount > balance) {
-//                System.out.println("""
-//                        -------------------------------------
-//                        ERROR.
-//                        You do not have sufficient funds to
-//                        process this payment.
-//
-//                        D) Reduce payment amount
-//                        X) Cancel payment""");
-//
-//                String option = Console.promptForSwitchString("Enter your command: ");
-//                switch (option) {
-//                    case "D" -> {
-//                        isCorrect = false;
-//                    }
-//                    case "X" -> {
-//                        MenuDialogue.textMenuMain();
-//                    }
-//                    default -> System.out.println("Please enter a valid option.");
-//                }
-//            } else {
-//                System.out.printf("""
-//                        -------------------------------------
-//                        Recipient Name: %s
-//                        Payment Amount: $%,.2f
-//
-//                        Is this correct?
-//
-//                        Y) Confirm and continue
-//                        N) Revise recipient and payment amount
-//                        X) Cancel payment
-//                        """, recipient, paymentAmount);
-//
-//                String option = Console.promptForSwitchString("\nEnter your command: ");
-//
-//                switch (option) {
-//                    case "Y" -> {
-//                        Process.makePayment();
-//                        System.out.println("Thank you.\n");
-//                        Thread.sleep(3000);
-//                        MenuDialogue.textMenuMain();
-//                        return;
-//                    }
-//                    case "N" -> {
-//                    }
-//                    case "X" -> {
-//                        MenuDialogue.textMenuMain();
-//                        return;
-//                    }
-//                }
-//            }
-//        }
+        while (true) {
+            if (isCorrect) {
+                recipient = Console.promptForString("\nRecipient Full Name: ").trim();
+                if (recipient.equalsIgnoreCase("x")) {
+                    MenuDialogue.textMenuMain();
+                    return;
+                }
+                paymentAmount = Console.promptForDouble("Amount of Payment: ");
+            } else {
+                paymentAmount = Console.promptForDouble("Amount of Payment: ");
+            }
+
+            if (paymentAmount > balance) {
+                System.out.println("""
+                        -------------------------------------
+                        ERROR.
+                        You do not have sufficient funds to
+                        process this payment.
+
+                        D) Reduce payment amount
+                        X) Cancel payment""");
+
+                String option = Console.promptForSwitchString("Enter your command: ");
+                switch (option) {
+                    case "D" -> {
+                        isCorrect = false;
+                    }
+                    case "X" -> {
+                        MenuDialogue.textMenuMain();
+                    }
+                    default -> System.out.println("Please enter a valid option.");
+                }
+            } else {
+                System.out.printf("""
+                        -------------------------------------
+                        Recipient Name: %s
+                        Payment Amount: $%,.2f
+
+                        Is this correct?
+
+                        Y) Confirm and continue
+                        N) Revise recipient and payment amount
+                        X) Cancel payment
+                        """, recipient, paymentAmount);
+
+                String option = Console.promptForSwitchString("\nEnter your command: ");
+
+                switch (option) {
+                    case "Y" -> {
+                        Process.makePayment();
+                        System.out.println("Thank you.\n");
+                        Thread.sleep(3000);
+                        MenuDialogue.textMenuMain();
+                        return;
+                    }
+                    case "N" -> {
+                    }
+                    case "X" -> {
+                        MenuDialogue.textMenuMain();
+                        return;
+                    }
+                }
+            }
+        }
     }
 
     private static void menuLedger() throws IOException {

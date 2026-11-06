@@ -15,7 +15,9 @@ public class LedgerReport {
 
         LocalDate startDate = month.atDay(1);
         LocalDate endDate = LocalDate.now();
-
+//        for(Transaction t : Process.transactions){
+//
+//        }
         try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
             String line;
             System.out.println("------------------------------------------------------------------------------");
