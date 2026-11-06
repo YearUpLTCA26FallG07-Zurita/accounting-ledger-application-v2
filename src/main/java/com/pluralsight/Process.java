@@ -18,9 +18,10 @@ public class Process {
                 Transaction newListing = new Transaction(
                         listing[0].trim(),
                         listing[1].trim(),
-                        listing[2].trim(),
                         listing[3].trim(),
+                        listing[2].trim(),
                         Double.parseDouble(listing[4].trim().replace(",", "").replace("$", "")));
+                transactions.add(newListing);
             }
         } catch (IOException e) {
             System.out.println("No transactions found.");

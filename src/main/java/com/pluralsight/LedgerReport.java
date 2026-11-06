@@ -1,12 +1,12 @@
 package com.pluralsight;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.YearMonth;
+import java.util.ArrayList;
 
 public class LedgerReport {
 
@@ -38,31 +38,31 @@ public class LedgerReport {
         MenuDialogue.textReport();
     }
 
-        public static void previousMonth() {
-            YearMonth previousMonth = YearMonth.now().minusMonths(1);
+    public static void previousMonth() {
+        YearMonth previousMonth = YearMonth.now().minusMonths(1);
 
-            LocalDate startDate = previousMonth.atDay(1);
-            LocalDate endDate = previousMonth.atEndOfMonth();
+        LocalDate startDate = previousMonth.atDay(1);
+        LocalDate endDate = previousMonth.atEndOfMonth();
 
-            try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
-                String line;
-                System.out.println("------------------------------------------------------------------------------");
-                while ((line = reader.readLine()) != null) {
-                    String[] listing = line.split("\\|");
+        try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
+            String line;
+            System.out.println("------------------------------------------------------------------------------");
+            while ((line = reader.readLine()) != null) {
+                String[] listing = line.split("\\|");
 
-                    LocalDate transactionDate = LocalDate.parse(listing[0].trim());
+                LocalDate transactionDate = LocalDate.parse(listing[0].trim());
 
-                    if (!transactionDate.isBefore(startDate) && !transactionDate.isAfter(endDate)) {
-                        System.out.println(line);
-                    }
+                if (!transactionDate.isBefore(startDate) && !transactionDate.isAfter(endDate)) {
+                    System.out.println(line);
                 }
-                System.out.println("------------------------------------------------------------------------------");
-                Thread.sleep(3000);
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
             }
-            MenuDialogue.textReport();
+            System.out.println("------------------------------------------------------------------------------");
+            Thread.sleep(3000);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
+        MenuDialogue.textReport();
+    }
 
     public static void yearToDate() {
         Year year = Year.now();
@@ -140,6 +140,7 @@ public class LedgerReport {
     }
 
     public static void customSearch() {
+
         System.out.println("""
                 Enter the following filter info.
                 If a filter doesn't apply, press Enter.
@@ -147,24 +148,56 @@ public class LedgerReport {
 
         while (true) {
             System.out.println("------------------------------------------------------------------------------");
-            String startDate = Console.promptForString("Start date: ");
-            String endDate = Console.promptForString("End date: ");
-            String description = Console.promptForString("Transaction description: ");
-            String vendor = Console.promptForString("Vendor/Company: ");
-            String price = Console.promptForString("Transaction price: ");
+            String rangeStart = Console.promptForString("Start date (yyyy-MM-dd): ").trim();
+            String rangeEnd = Console.promptForString("End date (yyyy-MM-dd): ").trim();
+            String vendor = Console.promptForString("Vendor/Company: ").trim();
+            String description = Console.promptForString("Transaction description: ").trim();
+            String amount = Console.promptForString("Transaction price: ").trim().replace(",", "").replace("$", "");
             System.out.println("------------------------------------------------------------------------------");
 
-            if (startDate.isBlank()
-                    && endDate.isBlank()
-                    && description.isBlank()
-                    && vendor.isBlank()
-                    && price.isBlank()) {
-                System.out.println("Custom Search must have at least one filter.");
+            LocalDate startDate = null;
+            LocalDate endDate = null;
+            double price = 0;
+
+            try {
+                if (!rangeStart.isEmpty()) startDate = LocalDate.parse(rangeStart);
+                if (!rangeEnd.isEmpty()) endDate = LocalDate.parse(rangeEnd);
+                if (!amount.isEmpty()) price = Double.parseDouble(amount);
+                ArrayList<Transaction> finalListing = new ArrayList<>();
+
+                for (Transaction t : Process.transactions) {
+                    if (startDate != null && t.getDate().isBefore(startDate)) {
+                        continue;
+                    }
+                    if (endDate != null && t.getDate().isAfter(endDate)) {
+                        continue;
+                    }
+                    if (!description.isEmpty() && !t.getDescription().equalsIgnoreCase(description)) {
+                        continue;
+                    }
+                    if (!vendor.isEmpty() && !t.getVendor().equalsIgnoreCase(vendor)) {
+                        continue;
+                    }
+                    if (price != 0 && Math.abs(t.getAmount()) != Math.abs(price)) {
+                        continue;
+                    }
+                    finalListing.add(t);
+                }
+                System.out.println("------------------------------------------------------------------------------");
+                if (finalListing.isEmpty()) {
+                    System.out.println("No transactions found. Enter filters.");
+                } else {
+                    for (Transaction t : finalListing) {
+                        System.out.println(t);
+                    }
+                }
+                System.out.println("------------------------------------------------------------------------------");
+                Thread.sleep(3000);
+                MenuDialogue.textReport();
+                return;
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
-
-
-
         }
     }
 }
-
