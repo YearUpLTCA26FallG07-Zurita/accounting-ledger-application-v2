@@ -3,30 +3,36 @@ package com.pluralsight;
 import java.io.*;
 import java.util.ArrayList;
 
-public class Process {
+public class ProcessGeneral {
     public static ArrayList<Transaction> transactions = new ArrayList<>();
 
     /**
      * Method that uses a BufferedReader to read off every entry in transactions.csv and load them into the program to be used in the Ledger.
      */
-    public static ArrayList<Transaction> loadTransaction() {
+    public static void loadTransaction() {
+        transactions.clear();   // avoids duplicates if it's ever called twice
 
         try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] listing = line.split("\\|");
-                Transaction newListing = new Transaction(
-                        listing[0].trim(),
-                        listing[1].trim(),
-                        listing[3].trim(),
-                        listing[2].trim(),
-                        Double.parseDouble(listing[4].trim().replace(",", "").replace("$", "")));
-                transactions.add(newListing);
+                String[] listing = line.replaceAll("\u001B\\[[0-9;]*m", "").split("\\|");
+                if (listing.length < 5) continue;   // skip blank/bad lines
+
+                try {
+                    Transaction newListing = new Transaction(
+                            listing[0].trim(),
+                            listing[1].trim(),
+                            listing[3].trim().replace("\"", ""),   // description
+                            listing[2].trim(),                      // vendor
+                            Double.parseDouble(listing[4].trim().replace(",", "").replace("$", "")));
+                    transactions.add(newListing);
+                } catch (Exception e) {
+                    TextColors.menu("Skipped bad line: " + line + " (" + e.getMessage() + ")");
+                }
             }
         } catch (IOException e) {
-            System.out.println("No transactions found.");
+            TextColors.menu("No transactions found.");
         }
-        return transactions;
     }
 
     /**
@@ -38,7 +44,7 @@ public class Process {
             writer.write(newListing.toString());
             writer.newLine();
         } catch (IOException e) {
-            System.out.println("There was an error writing.");
+            TextColors.menu("There was an error writing.");
         }
     }
 
@@ -58,14 +64,14 @@ public class Process {
         } catch (FileNotFoundException e) {
             balance = 0;
         } catch (IOException | NumberFormatException e) {
-            System.out.println("Balance could not be read.");
+            TextColors.menu("Balance could not be read.");
         }
 
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(AccountingLedger.filenameBalance))) {
             writer.write(String.format("%.2f", balance));
         } catch (IOException e) {
-            System.out.println("Balance could not be saved.");
+            TextColors.menu("Balance could not be saved.");
         }
     }
 
@@ -79,16 +85,17 @@ public class Process {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(AccountingLedger.filenameBalance))) {
             writer.write(String.format("%.2f", balance));
         } catch (IOException e) {
-            System.out.println("Balance could not be saved.");
+            TextColors.menu("Balance could not be saved.");
         }
     }
 
     public static void addDeposit() {
-        System.out.println("-------------------------------------");
+
+        TextColors.dash();
         String name = Console.promptForString("Enter the name of the payer: ");
         double deposit = Console.promptForDouble("Enter deposit amount: ");
         String description = Console.promptForString("Enter short description of the deposit: ");
-        System.out.println("-------------------------------------");
+        TextColors.dash();
 
         if (deposit > 0) {
             Transaction transaction = new Transaction(name, description, deposit);
@@ -97,23 +104,19 @@ public class Process {
             balance += deposit;
             saveBalance();
         } else {
-            System.out.println("Please enter an amount greater than $0.");
+            TextColors.menu("Please enter an amount greater than $0.");
         }
     }
 
-    public static void makePayment() {
-        System.out.println("-------------------------------------");
-        String name = Console.promptForString("Enter the name of the recipient: ");
-        double payment = -Math.abs(Console.promptForDouble("Enter payment amount: "));
-        String description = Console.promptForString("Enter short description of the payment: ");
-        System.out.println("-------------------------------------");
+    public static void makePayment(String name, String description, double amount) {
+        double payment = -Math.abs(amount);
 
         Transaction transaction = new Transaction(name, description, payment);
         transactions.add(transaction);
         writeTransaction(transaction);
         balance += payment;
         saveBalance();
-        System.out.printf("Payment recorded. New balance: $%.2f%n", balance);
 
+        TextColors.printf(TextColors.BRIGHT_RED, "Payment recorded. New balance: $%,.2f%n", balance);
     }
 }

@@ -3,34 +3,33 @@ package com.pluralsight;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
 
-public class LedgerReport {
+public class ProcessLedger {
 
     public static void monthToDate() {
         YearMonth month = YearMonth.now();
 
         LocalDate startDate = month.atDay(1);
         LocalDate endDate = LocalDate.now();
-//        for(Transaction t : Process.transactions){
-//
-//        }
+
         try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
             String line;
-            System.out.println("------------------------------------------------------------------------------");
+            TextColors.longDash();
             while ((line = reader.readLine()) != null) {
                 String[] listing = line.split("\\|");
 
                 LocalDate transactionDate = LocalDate.parse(listing[0].trim());
 
                 if (!transactionDate.isBefore(startDate) && !transactionDate.isAfter(endDate)) {
-                    System.out.println(line);
+                    TextColors.transaction(line);
                 }
             }
-            System.out.println("------------------------------------------------------------------------------");
+            TextColors.longDash();
             Thread.sleep(3000);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
@@ -46,17 +45,17 @@ public class LedgerReport {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
             String line;
-            System.out.println("------------------------------------------------------------------------------");
+            TextColors.longDash();
             while ((line = reader.readLine()) != null) {
                 String[] listing = line.split("\\|");
 
                 LocalDate transactionDate = LocalDate.parse(listing[0].trim());
 
                 if (!transactionDate.isBefore(startDate) && !transactionDate.isAfter(endDate)) {
-                    System.out.println(line);
+                    TextColors.transaction(line);
                 }
             }
-            System.out.println("------------------------------------------------------------------------------");
+            TextColors.longDash();
             Thread.sleep(3000);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
@@ -72,17 +71,17 @@ public class LedgerReport {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
             String line;
-            System.out.println("------------------------------------------------------------------------------");
+            TextColors.longDash();
             while ((line = reader.readLine()) != null) {
                 String[] listing = line.split("\\|");
 
                 LocalDate transactionDate = LocalDate.parse(listing[0].trim());
 
                 if (!transactionDate.isBefore(startDate) && !transactionDate.isAfter(endDate)) {
-                    System.out.println(line);
+                    TextColors.transaction(line);
                 }
             }
-            System.out.println("------------------------------------------------------------------------------");
+            TextColors.longDash();
             Thread.sleep(3000);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
@@ -91,24 +90,24 @@ public class LedgerReport {
     }
 
     public static void previousYear() {
-        Year currentYear = Year.now();
+        Year previousYear = Year.now().minusYears(1);
 
-        LocalDate startDate = currentYear.atDay(1);
-        LocalDate endDate = currentYear.atMonth(12).atEndOfMonth();
+        LocalDate startDate = previousYear.atDay(1);
+        LocalDate endDate = previousYear.atMonth(12).atEndOfMonth();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
             String line;
-            System.out.println("------------------------------------------------------------------------------");
+            TextColors.longDash();
             while ((line = reader.readLine()) != null) {
                 String[] listing = line.split("\\|");
 
                 LocalDate transactionDate = LocalDate.parse(listing[0].trim());
 
                 if (!transactionDate.isBefore(startDate) && !transactionDate.isAfter(endDate)) {
-                    System.out.println(line);
+                    TextColors.transaction(line);
                 }
             }
-            System.out.println("------------------------------------------------------------------------------");
+            TextColors.longDash();
             Thread.sleep(3000);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
@@ -121,17 +120,17 @@ public class LedgerReport {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
             String line;
-            System.out.println("------------------------------------------------------------------------------");
+            TextColors.longDash();
             while ((line = reader.readLine()) != null) {
                 String[] listing = line.split("\\|");
 
                 String vendor = listing[2].trim();
 
                 if (searchVendor.equalsIgnoreCase(vendor)) {
-                    System.out.println(line);
+                    TextColors.transaction(line);
                 }
             }
-            System.out.println("------------------------------------------------------------------------------");
+            TextColors.longDash();
             Thread.sleep(3000);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
@@ -140,20 +139,19 @@ public class LedgerReport {
     }
 
     public static void customSearch() {
-
-        System.out.println("""
+        TextColors.dash();
+        TextColors.menu("""
                 Enter the following filter info.
                 If a filter doesn't apply, press Enter.
                 """);
 
         while (true) {
-            System.out.println("------------------------------------------------------------------------------");
             String rangeStart = Console.promptForString("Start date (yyyy-MM-dd): ").trim();
             String rangeEnd = Console.promptForString("End date (yyyy-MM-dd): ").trim();
             String vendor = Console.promptForString("Vendor/Company: ").trim();
             String description = Console.promptForString("Transaction description: ").trim();
             String amount = Console.promptForString("Transaction price: ").trim().replace(",", "").replace("$", "");
-            System.out.println("------------------------------------------------------------------------------");
+
 
             LocalDate startDate = null;
             LocalDate endDate = null;
@@ -163,41 +161,49 @@ public class LedgerReport {
                 if (!rangeStart.isEmpty()) startDate = LocalDate.parse(rangeStart);
                 if (!rangeEnd.isEmpty()) endDate = LocalDate.parse(rangeEnd);
                 if (!amount.isEmpty()) price = Double.parseDouble(amount);
-                ArrayList<Transaction> finalListing = new ArrayList<>();
+            } catch (DateTimeException | NumberFormatException e) {
+                TextColors.menu("Invalid date or price. Please try again.\n");
+                continue;
+            }
 
-                for (Transaction t : Process.transactions) {
-                    if (startDate != null && t.getDate().isBefore(startDate)) {
-                        continue;
-                    }
-                    if (endDate != null && t.getDate().isAfter(endDate)) {
-                        continue;
-                    }
-                    if (!description.isEmpty() && !t.getDescription().equalsIgnoreCase(description)) {
-                        continue;
-                    }
-                    if (!vendor.isEmpty() && !t.getVendor().equalsIgnoreCase(vendor)) {
-                        continue;
-                    }
-                    if (price != 0 && Math.abs(t.getAmount()) != Math.abs(price)) {
-                        continue;
-                    }
-                    finalListing.add(t);
+            ArrayList<Transaction> finalListing = new ArrayList<>();
+
+            for (Transaction t : ProcessGeneral.transactions) {
+                if (startDate != null && t.getDate().isBefore(startDate)) {
+                    continue;
                 }
-                System.out.println("------------------------------------------------------------------------------");
-                if (finalListing.isEmpty()) {
-                    System.out.println("No transactions found. Enter filters.");
-                } else {
-                    for (Transaction t : finalListing) {
-                        System.out.println(t);
-                    }
+                if (endDate != null && t.getDate().isAfter(endDate)) {
+                    continue;
                 }
-                System.out.println("------------------------------------------------------------------------------");
+                if (!description.isEmpty() && !t.getDescription().equalsIgnoreCase(description)) {
+                    continue;
+                }
+                if (!vendor.isEmpty() && !t.getVendor().equalsIgnoreCase(vendor)) {
+                    continue;
+                }
+                if (price != 0 && Math.abs(t.getAmount()) != Math.abs(price)) {
+                    continue;
+                }
+                finalListing.add(t);
+            }
+
+            TextColors.longDash();
+            if (finalListing.isEmpty()) {
+                TextColors.menu("No transactions found.");
+            } else {
+                for (Transaction t : finalListing) {
+                    TextColors.transaction(t.toString());
+                }
+            }
+            TextColors.longDash();
+
+            try {
                 Thread.sleep(3000);
-                MenuDialogue.textReport();
-                return;
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            MenuDialogue.textReport();
+            return;
         }
     }
 }

@@ -5,11 +5,11 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class Transaction {
-    private LocalDate date;
-    private LocalTime time;
-    private String description;
-    private String vendor;
-    private double amount;
+    private final LocalDate date;
+    private final LocalTime time;
+    private final String description;
+    private final String vendor;
+    private final double amount;
 
     public DateTimeFormatter dateFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public DateTimeFormatter timeFmt = DateTimeFormatter.ofPattern("hh:mm a");
@@ -41,57 +41,36 @@ public class Transaction {
         return date;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public LocalTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalTime time) {
-        this.time = time;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getVendor() {
         return vendor;
     }
 
-    public void setVendor(String vendor) {
-        this.vendor = vendor;
-    }
-
     public double getAmount() {
         return amount;
-    }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
     }
     @Override
     public String toString() {
+        String color;
         String formattedAmount;
-        String formattedDescription = "\"" + description + "\"";
 
         if (amount < 0) {
+            color = TextColors.BRIGHT_RED;       // payment
             formattedAmount = "-$" + String.format("%,.2f", Math.abs(amount));
         } else {
+            color = TextColors.BRIGHT_GREEN;     // deposit
             formattedAmount = " $" + String.format("%,.2f", amount);
         }
 
-        return String.format("%-12s | %-12s | %-20s | %-15s | %5s",
+        return String.format("%-12s | %-12s | %-20s | %-22s | %s",
                 date.format(dateFmt),
                 time.format(timeFmt),
                 vendor,
-                formattedDescription,
-                formattedAmount);
+                "\"" + description + "\"",
+                color + formattedAmount + TextColors.RESET);
     }
 }

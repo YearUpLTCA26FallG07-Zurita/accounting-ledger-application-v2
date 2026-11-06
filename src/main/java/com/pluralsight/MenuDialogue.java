@@ -3,63 +3,44 @@ package com.pluralsight;
 public class MenuDialogue {
 
     public static void textMenuMain() {
-        System.out.println("""
-                -------------------------------------
-                Main Menu
-
-                D) Add Deposit
-                P) Make A Payment
-                L) Access Ledger
-
-                X) Exit the Application
-                """);
+        TextColors.dash();
+        TextColors.menu("Main Menu\n");
+        System.out.println("D) Add Deposit");
+        System.out.println("P) Make A Payment");
+        System.out.println("L) Access Ledger\n");
+        TextColors.exitOption("X) Exit the Application\n");
     }
 
     public static void textMakePayment(double currentBalance) {
-        System.out.printf("""
-                -------------------------------------
-                Current balance: $%,.2f
-                
+        TextColors.dash();
+        TextColors.printf(TextColors.BRIGHT_CYAN, "Current balance: $%,.2f%n%n", currentBalance);
+        TextColors.menu("""
                 Please enter the information below to
                 make a payment.
-                
-                To cancel, enter X.
-                """, currentBalance);
+                """);
+        TextColors.exitOption("To cancel, enter X.\n");
     }
 
     public static void textLedger() {
-        System.out.println("""
-                -------------------------------------
-                What entries would you like to view?
-                
-                A) All Entries
-                D) Deposit Entries Only
-                P) Payment Entries Only
-                R) Reports
-                
-                X) Return to main menu
-                """);
-
+        TextColors.menu("What entries would you like to view?\n");
+        System.out.println("A) All Entries");
+        System.out.println("D) Deposit Entries Only");
+        System.out.println("P) Payment Entries Only");
+        System.out.println("R) Reports\n");
+        TextColors.exitOption("X) Return to main menu\n");
     }
+
     public static void textReport() {
-        System.out.println("""
-                Select a filter for your report.
+        TextColors.menu("""
+                Select a filter for your report.""" + TextColors.RESET + """
                 
-                1) Month To Date
+                \n1) Month To Date
                 2) Previous Month
                 3) Year To Date
                 4) Previous Year
                 5) Search By Vendor
-                
-                !NEW! 6) Custom Search
-                
-                0) Back to Ledger
+                6) Custom Search
                 """);
-    }
-    public static void textCustomSearch(){
-        System.out.println("""
-                Enter your preferred filters.
-                If a filter option doesn't apply, just press Enter.
-                """);
+        TextColors.exitOption("0) Back to Ledger\n");
     }
 }

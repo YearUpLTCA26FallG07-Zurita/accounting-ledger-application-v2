@@ -1,52 +1,51 @@
-
 package com.pluralsight;
 
 import java.util.Scanner;
-
 
 public class Console {
 
     private static final Scanner scanner = new Scanner(System.in);
 
+    // ----- Prompts (all bright yellow) -----
     public static String promptForSwitchString(String prompt) {
-        System.out.print(prompt);
+        TextColors.print(TextColors.BRIGHT_YELLOW, prompt);
         return scanner.nextLine().toUpperCase().trim();
     }
-    public static String promptForString(String prompt){
-        System.out.print(prompt);
+
+    public static String promptForString(String prompt) {
+        TextColors.print(TextColors.BRIGHT_YELLOW, prompt);
         return scanner.nextLine();
     }
 
-    public static int promptForInt(String prompt){
+    public static int promptForInt(String prompt) {
 
         int result;
 
-        while(true){
-            try{
-
-                System.out.print(prompt);
+        while (true) {
+            try {
+                TextColors.print(TextColors.BRIGHT_YELLOW, prompt);
                 result = scanner.nextInt();
                 scanner.nextLine();
                 return result;
             } catch (Exception e) {
-                System.out.println("Invalid input, please enter a number.");
+                TextColors.menu("Invalid input, please enter a number.");
                 scanner.nextLine();
             }
         }
     }
-    public static double promptForDouble(String prompt){
+
+    public static double promptForDouble(String prompt) {
 
         double result;
 
-        while(true){
-            try{
-
-                System.out.print(prompt);
+        while (true) {
+            try {
+                TextColors.print(TextColors.BRIGHT_YELLOW, prompt);
                 result = scanner.nextDouble();
                 scanner.nextLine();
                 return result;
             } catch (Exception e) {
-                System.out.println("Invalid input, please enter a number.");
+                TextColors.menu("Invalid input, please enter a number.");
                 scanner.nextLine();
             }
         }
