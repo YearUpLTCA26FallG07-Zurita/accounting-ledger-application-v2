@@ -7,13 +7,12 @@ import java.util.ArrayList;
 
 public class AccountingLedger {
 
-    public static void main(String[] args) throws InterruptedException, IOException {
+    public static void main(String[] args) throws InterruptedException {
 
         ArrayList<Transaction> transactions = Process.loadTransaction();
         Process.loadBalance();
         double balance = Process.balance;
         Menu.menuMain();
-
     }
 }
 

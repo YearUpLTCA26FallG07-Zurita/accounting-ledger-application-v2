@@ -50,6 +50,9 @@ public class MenuDialogue {
                 3) Year To Date
                 4) Previous Year
                 5) Search By Vendor
+                
+                !NEW! 6) Custom Search
+                
                 0) Back to Ledger
                 """);
     }

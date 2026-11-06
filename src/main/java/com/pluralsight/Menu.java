@@ -6,9 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Menu {
-    public static void menuMain() throws InterruptedException, IOException {
-        MenuDialogue.textMenuMain();
-
+    public static void menuMain() throws InterruptedException {
         System.out.println("""
                 -------------------------------------
                 Main Menu
@@ -158,7 +156,7 @@ public class Menu {
         }
     }
 
-    private static void menuLedger() throws IOException {
+    private static void menuLedger() {
         MenuDialogue.textLedger();
 
         while (true) {
@@ -185,7 +183,7 @@ public class Menu {
         }
     }
 
-    private static void submenuAllEntries() throws IOException {
+    private static void submenuAllEntries() {
         Process.loadTransaction();
         try (BufferedReader reader = new BufferedReader(new FileReader("transactions.csv"))) {
             String line;
@@ -270,10 +268,11 @@ public class Menu {
                 case 3 -> LedgerReport.yearToDate();
                 case 4 -> LedgerReport.previousYear();
                 case 5 -> LedgerReport.searchByVendor();
+                case 6 -> LedgerReport.customSearch();
                 case 0 -> {
-                    return;
-
-                }
+                    MenuDialogue.textLedger();
+                    return;}
+                default -> System.out.println("Please enter a valid number.");
             }
         }
     }

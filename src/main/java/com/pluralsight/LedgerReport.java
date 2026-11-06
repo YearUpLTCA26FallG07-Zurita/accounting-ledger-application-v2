@@ -35,6 +35,7 @@ public class LedgerReport {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+        MenuDialogue.textReport();
     }
 
         public static void previousMonth() {
@@ -60,6 +61,7 @@ public class LedgerReport {
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            MenuDialogue.textReport();
         }
 
     public static void yearToDate() {
@@ -85,6 +87,7 @@ public class LedgerReport {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+        MenuDialogue.textReport();
     }
 
     public static void previousYear() {
@@ -110,6 +113,7 @@ public class LedgerReport {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+        MenuDialogue.textReport();
     }
 
     public static void searchByVendor() {
@@ -132,6 +136,11 @@ public class LedgerReport {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+        MenuDialogue.textReport();
+    }
+
+    public static void customSearch() {
+
     }
 }
 
