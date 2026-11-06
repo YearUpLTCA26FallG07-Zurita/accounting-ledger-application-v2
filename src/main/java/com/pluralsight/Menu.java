@@ -6,7 +6,12 @@ import java.io.IOException;
 
 public class Menu {
     public static void menuMain() {
-        MenuDialogue.textMenuMain();
+        TextColors.dash();
+        TextColors.menu("Main Menu\n");
+        System.out.println("D) Add Deposit");
+        System.out.println("P) Make A Payment");
+        System.out.println("L) Access Ledger\n");
+        TextColors.exitOption("X) Exit the Application\n");
 
 
         while (true) {
@@ -54,14 +59,24 @@ public class Menu {
                         case "D" -> {
                         }
                         case "X" -> {
-                            MenuDialogue.textMenuMain();
+                            TextColors.dash();
+                            TextColors.menu("Main Menu\n");
+                            System.out.println("D) Add Deposit");
+                            System.out.println("P) Make A Payment");
+                            System.out.println("L) Access Ledger\n");
+                            TextColors.exitOption("X) Exit the Application\n");
                             return;
                         }
                         default -> TextColors.menu("Please enter a valid option.");
                     }
                 }
                 case "X" -> {
-                    MenuDialogue.textMenuMain();
+                    TextColors.dash();
+                    TextColors.menu("Main Menu\n");
+                    System.out.println("D) Add Deposit");
+                    System.out.println("P) Make A Payment");
+                    System.out.println("L) Access Ledger\n");
+                    TextColors.exitOption("X) Exit the Application\n");
                     return;
                 }
                 default -> TextColors.menu("Please enter a valid option.");
@@ -75,8 +90,13 @@ public class Menu {
         String description = "";
         double paymentAmount;
 
-        MenuDialogue.textMakePayment(ProcessGeneral.balance);
-
+        TextColors.dash();
+        TextColors.printf(TextColors.BRIGHT_CYAN, "Current balance: $%,.2f%n%n", ProcessGeneral.balance);
+        TextColors.menu("""
+                Please enter the information below to
+                make a payment.
+                """);
+        TextColors.exitOption("To cancel, enter X.\n");
         try {
             while (true) {
                 double balance = ProcessGeneral.balance;
@@ -85,7 +105,12 @@ public class Menu {
                 if (isCorrect) {
                     recipient = Console.promptForString("Enter the name of the recipient: ").trim();
                     if (recipient.equalsIgnoreCase("x")) {
-                        MenuDialogue.textMenuMain();
+                        TextColors.dash();
+                        TextColors.menu("Main Menu\n");
+                        System.out.println("D) Add Deposit");
+                        System.out.println("P) Make A Payment");
+                        System.out.println("L) Access Ledger\n");
+                        TextColors.exitOption("X) Exit the Application\n");
                         return;
                     }
                     paymentAmount = Math.abs(Console.promptForDouble("Enter payment amount: "));
@@ -108,7 +133,12 @@ public class Menu {
                     switch (option) {
                         case "D" -> isCorrect = false;
                         case "X" -> {
-                            MenuDialogue.textMenuMain();
+                            TextColors.dash();
+                            TextColors.menu("Main Menu\n");
+                            System.out.println("D) Add Deposit");
+                            System.out.println("P) Make A Payment");
+                            System.out.println("L) Access Ledger\n");
+                            TextColors.exitOption("X) Exit the Application\n");
                             return;
                         }
                         default -> TextColors.menu("Please enter a valid option.");
@@ -132,12 +162,22 @@ public class Menu {
                             ProcessGeneral.makePayment(recipient, description, paymentAmount);
                             TextColors.menu(TextColors.PINK + "Thank you.\n");
                             Thread.sleep(3000);
-                            MenuDialogue.textMenuMain();
+                            TextColors.dash();
+                            TextColors.menu("Main Menu\n");
+                            System.out.println("D) Add Deposit");
+                            System.out.println("P) Make A Payment");
+                            System.out.println("L) Access Ledger\n");
+                            TextColors.exitOption("X) Exit the Application\n");
                             return;
                         }
                         case "N" -> isCorrect = true;   // ask for everything again
                         case "X" -> {
-                            MenuDialogue.textMenuMain();
+                            TextColors.dash();
+                            TextColors.menu("Main Menu\n");
+                            System.out.println("D) Add Deposit");
+                            System.out.println("P) Make A Payment");
+                            System.out.println("L) Access Ledger\n");
+                            TextColors.exitOption("X) Exit the Application\n");
                             return;
                         }
                         default -> TextColors.menu("Please enter a valid option.");
@@ -150,8 +190,12 @@ public class Menu {
     }
 
     private static void menuLedger() {
-        MenuDialogue.textLedger();
-
+        TextColors.menu("What entries would you like to view?\n");
+        System.out.println("A) All Entries");
+        System.out.println("D) Deposit Entries Only");
+        System.out.println("P) Payment Entries Only");
+        System.out.println("R) Reports\n");
+        TextColors.exitOption("X) Return to main menu\n");
         while (true) {
             String option = Console.promptForSwitchString("Enter your command here: ");
 
@@ -161,7 +205,12 @@ public class Menu {
                 case "P" -> submenuPaymentsOnly();
                 case "R" -> menuReports();
                 case "X" -> {
-                    MenuDialogue.textMenuMain();
+                    TextColors.dash();
+                    TextColors.menu("Main Menu\n");
+                    System.out.println("D) Add Deposit");
+                    System.out.println("P) Make A Payment");
+                    System.out.println("L) Access Ledger\n");
+                    TextColors.exitOption("X) Exit the Application\n");
                     return;
                 }
                 default -> TextColors.menu("Please enter a valid option.");
@@ -178,7 +227,12 @@ public class Menu {
             }
             TextColors.longDash();
             Thread.sleep(3000);
-            MenuDialogue.textLedger();
+            TextColors.menu("What entries would you like to view?\n");
+            System.out.println("A) All Entries");
+            System.out.println("D) Deposit Entries Only");
+            System.out.println("P) Payment Entries Only");
+            System.out.println("R) Reports\n");
+            TextColors.exitOption("X) Return to main menu\n");
         } catch (IOException e) {
             TextColors.menu("Error.");
         } catch (InterruptedException e) {
@@ -204,7 +258,12 @@ public class Menu {
             }
             TextColors.longDash();
             Thread.sleep(3000);
-            MenuDialogue.textLedger();
+            TextColors.menu("What entries would you like to view?\n");
+            System.out.println("A) All Entries");
+            System.out.println("D) Deposit Entries Only");
+            System.out.println("P) Payment Entries Only");
+            System.out.println("R) Reports\n");
+            TextColors.exitOption("X) Return to main menu\n");
         } catch (IOException | InterruptedException e) {
             TextColors.menu("Error reading file.");
         } catch (NumberFormatException e) {
@@ -230,7 +289,12 @@ public class Menu {
             }
             TextColors.longDash();
             Thread.sleep(3000);
-            MenuDialogue.textLedger();
+            TextColors.menu("What entries would you like to view?\n");
+            System.out.println("A) All Entries");
+            System.out.println("D) Deposit Entries Only");
+            System.out.println("P) Payment Entries Only");
+            System.out.println("R) Reports\n");
+            TextColors.exitOption("X) Return to main menu\n");
         } catch (IOException e) {
             TextColors.menu("Error reading file.");
         } catch (NumberFormatException e) {
@@ -241,7 +305,17 @@ public class Menu {
     }
 
     private static void menuReports() {
-        MenuDialogue.textReport();
+        TextColors.menu("""
+                Select a filter for your report.""" + TextColors.RESET + """
+                
+                \n1) Month To Date
+                2) Previous Month
+                3) Year To Date
+                4) Previous Year
+                5) Search By Vendor
+                6) Custom Search
+                """);
+        TextColors.exitOption("0) Back to Ledger\n");
 
         while (true) {
 
@@ -255,7 +329,12 @@ public class Menu {
                 case 5 -> ProcessLedger.searchByVendor();
                 case 6 -> ProcessLedger.customSearch();
                 case 0 -> {
-                    MenuDialogue.textLedger();
+                    TextColors.menu("What entries would you like to view?\n");
+                    System.out.println("A) All Entries");
+                    System.out.println("D) Deposit Entries Only");
+                    System.out.println("P) Payment Entries Only");
+                    System.out.println("R) Reports\n");
+                    TextColors.exitOption("X) Return to main menu\n");
                     return;
                 }
                 default -> TextColors.menu("Please enter a valid number.");

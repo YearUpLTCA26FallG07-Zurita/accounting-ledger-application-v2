@@ -2,6 +2,7 @@ package com.pluralsight;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ProcessGeneral {
     public static ArrayList<Transaction> transactions = new ArrayList<>();
@@ -9,7 +10,7 @@ public class ProcessGeneral {
     /**
      * Method that uses a BufferedReader to read off every entry in transactions.csv and load them into the program to be used in the Ledger.
      */
-    public static void loadTransaction() {
+    public static ArrayList<Transaction> loadTransaction() {
         transactions.clear();   // avoids duplicates if it's ever called twice
 
         try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameTransactions))) {
@@ -33,6 +34,7 @@ public class ProcessGeneral {
         } catch (IOException e) {
             TextColors.menu("No transactions found.");
         }
+        return transactions;
     }
 
     /**
@@ -55,23 +57,22 @@ public class ProcessGeneral {
     public static double balance = 0;
 
     public static void loadBalance() {
+        File file = new File(AccountingLedger.filenameBalance);
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(AccountingLedger.filenameBalance))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line = reader.readLine();
+            while (line != null && line.isBlank()) {   // skip blank lines
+                line = reader.readLine();
+            }
             if (line != null) {
-                balance = Double.parseDouble(line.trim());
+                // the file only ever holds a plain number, so a comma is a decimal comma
+                balance = Double.parseDouble(line.trim().replace(',', '.'));
             }
         } catch (FileNotFoundException e) {
             balance = 0;
+            saveBalance();   // create the file
         } catch (IOException | NumberFormatException e) {
-            TextColors.menu("Balance could not be read.");
-        }
-
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(AccountingLedger.filenameBalance))) {
-            writer.write(String.format("%.2f", balance));
-        } catch (IOException e) {
-            TextColors.menu("Balance could not be saved.");
+            TextColors.menu("Balance could not be read from " + file.getAbsolutePath());
         }
     }
 
@@ -83,7 +84,7 @@ public class ProcessGeneral {
      */
     public static void saveBalance() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(AccountingLedger.filenameBalance))) {
-            writer.write(String.format("%.2f", balance));
+            writer.write(String.format(Locale.US, "%.2f", balance));
         } catch (IOException e) {
             TextColors.menu("Balance could not be saved.");
         }

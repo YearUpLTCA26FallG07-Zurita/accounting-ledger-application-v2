@@ -34,8 +34,10 @@ public class ProcessLedger {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-        MenuDialogue.textReport();
+        ProcessLedger.textReport();
     }
+
+
 
     public static void previousMonth() {
         YearMonth previousMonth = YearMonth.now().minusMonths(1);
@@ -60,7 +62,7 @@ public class ProcessLedger {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-        MenuDialogue.textReport();
+        textReport();
     }
 
     public static void yearToDate() {
@@ -86,7 +88,7 @@ public class ProcessLedger {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-        MenuDialogue.textReport();
+        textReport();
     }
 
     public static void previousYear() {
@@ -112,7 +114,7 @@ public class ProcessLedger {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-        MenuDialogue.textReport();
+        textReport();
     }
 
     public static void searchByVendor() {
@@ -135,7 +137,7 @@ public class ProcessLedger {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-        MenuDialogue.textReport();
+        textReport();
     }
 
     public static void customSearch() {
@@ -202,8 +204,17 @@ public class ProcessLedger {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            MenuDialogue.textReport();
+            textReport();
             return;
         }
+    }
+
+    private static void textReport() {
+        TextColors.menu("What entries would you like to view?\n");
+        System.out.println("A) All Entries");
+        System.out.println("D) Deposit Entries Only");
+        System.out.println("P) Payment Entries Only");
+        System.out.println("R) Reports\n");
+        TextColors.exitOption("X) Return to main menu\n");
     }
 }
